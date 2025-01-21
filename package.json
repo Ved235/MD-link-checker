@@ -2,7 +2,7 @@
   "name": "markdown-link-checker",
   "version": "1.0.0",
   "private": true,
-  "description": "A Probot app",
+  "description": "A markdown link checker app",
   "author": "Vedant Singhal",
   "license": "ISC",
   "homepage": "https://github.com//",
