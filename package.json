@@ -11,6 +11,7 @@
     "github",
     "probot-app"
   ],
+  "types": "module",
   "scripts": {
     "start": "probot run ./app.js",
     "test": "node --test"
