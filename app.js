@@ -1,10 +1,11 @@
-import fetch from "node-fetch";
-import extractLinks from "markdown-link-extractor";
-import path from "path";
+const axios = require('axios');
+const extractLinks = require('markdown-link-extractor');
+const path = require('path');
+
 /**
  * @param {import('probot').Probot} app
  */
-export default (app) => {
+module.exports = (app) => {
   app.log.info("Markdown Link Checker loaded!");
 
   // Handle scheduled events
@@ -56,7 +57,7 @@ export default (app) => {
       // If there are broken links, create an issue
       const invalidLinks = allResults.filter((r) => !r.valid);
       if (invalidLinks.length > 0) {
-        await createOrUpdateIssue(context, allResults);
+        await createOrUpdateIssue(context, allResults, app);
       }
     } catch (error) {
       app.log.error(`Error in scheduled check: ${error}`);
@@ -144,18 +145,18 @@ async function checkInternalFile(filePath, originalLink, sourceFile, context) {
 // Check if a URL is valid and accessible
 async function checkUrl(url) {
   try {
-    const response = await fetch(url, {
-      method: "HEAD",
+    const response = await axios.head(url, {
       timeout: 5000,
       headers: {
         "User-Agent": "Link-Checker-Bot",
       },
-      redirect: "follow", // Follow redirects
+      maxRedirects: 5, // Follow redirects
+      validateStatus: null // Don't throw on any status code
     });
     return {
       url,
       status: response.status,
-      valid: response.ok,
+      valid: response.status >= 200 && response.status < 400,
     };
   } catch (error) {
     return {
@@ -224,7 +225,7 @@ function generateIssueBody(results) {
 }
 
 // Create or update issue with link check results
-async function createOrUpdateIssue(context, results) {
+async function createOrUpdateIssue(context, results, app) {
   const issueTitle = "🔍 Markdown Link Check Report";
 
   // Search for existing open issues
