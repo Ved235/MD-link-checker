@@ -5,14 +5,14 @@
   "description": "A markdown link checker app",
   "author": "Vedant Singhal",
   "license": "ISC",
-  "homepage": "https://github.com//",
+  "homepage": "https://github.com//Ved235",
   "keywords": [
     "probot",
     "github",
     "probot-app"
   ],
   "scripts": {
-    "start": "probot run ./index.js",
+    "start": "probot run ./app.js",
     "test": "node --test"
   },
   "dependencies": {
