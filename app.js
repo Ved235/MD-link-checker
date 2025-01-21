@@ -4,7 +4,7 @@ import path from "path";
 /**
  * @param {import('probot').Probot} app
  */
-export default (app) => {
+module.exports = (app) => {
   app.log.info("Markdown Link Checker loaded!");
 
   // Handle scheduled events
