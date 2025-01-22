@@ -21,7 +21,7 @@ A GitHub App that automatically checks for broken links in markdown files across
 2. **Self Hosting**
    ```sh
    # Clone repository
-   git clone <your-repo-url>
+   git clone https://github.com/Ved235/MD-link-checker.git
    cd markdown-link-checker
 
    # Install dependencies
@@ -29,4 +29,15 @@ A GitHub App that automatically checks for broken links in markdown files across
 
    # Configure environment
    cp .env.example .env
-   # Fill in your GitHub App credentials in .env
+   
+   # Start the app
+   npm start
+
+   # Setup GitHub App
+   - Go to [localhost:3000](http://localhost:3000)
+   - Follow the Probot instructions given there
+
+   # Host the GitHub App
+   Use Probot [documentation](https://github.com/probot/example-vercel#readme) to host it on vercel```
+
+In vercel enviornment variables add **NODEJS_HELPERS = 0**, else you will receive errors
